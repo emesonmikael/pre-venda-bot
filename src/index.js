@@ -48,7 +48,12 @@ const initializeProvider = () => {
     });
 
     // Inicializar o contrato Crowdsale
-    crowdsaleContract = new ethers.Contract(CONTRACT_ADDRESS, crowdsaleAbi, provider);
+    try {
+        crowdsaleContract = new ethers.Contract(CONTRACT_ADDRESS, crowdsaleAbi, provider);
+        console.log('Contrato Crowdsale inicializado com sucesso.');
+    } catch (error) {
+        console.error('Erro ao inicializar o contrato Crowdsale:', error);
+    }
 };
 
 // Função para reconectar o provider WebSocket
@@ -164,7 +169,7 @@ bot.onText(/\/help/, (msg) => {
 /start - Iniciar interação com o bot
 /help - Mostrar esta mensagem de ajuda
 /guide - Receber orientações de como comprar tokens
-/status - Verificar o status atual da Pre-venda
+/status - Verificar o status atual da crowdsale
     `;
     bot.sendMessage(chatId, helpMessage, { parse_mode: 'Markdown' });
 });
@@ -179,17 +184,13 @@ bot.onText(/\/status/, async (msg) => {
         const tokenContract = await getTokenContract();
         const weiRaised = await crowdsaleContract.weiRaised();
         const rate = await crowdsaleContract.rate();
-        const restantes = await crowdsaleContract.remainingTokens();
         const symbol = await tokenContract.symbol();
         const decimals = await tokenContract.decimals();
 
         const formattedWeiRaised = ethers.utils.formatEther(weiRaised);
-        const formattedRate =  ethers.utils.formatEther(rate)
-        //const formattedRestantes = restantes* (10** 9);
-        const resto = ethers.utils.formatUnits(restantes);
-
+        const formattedRate = rate.toString();
         const message = `
-📊 *Status da Pre-Venda:*
+📊 *Status da Crowdsale:*
 
 💰 *BNB Arrecadados:* ${formattedWeiRaised} BNB
 🔢 *Taxa de Conversão:* ${formattedRate} tokens por BNB
