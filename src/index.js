@@ -188,7 +188,7 @@ bot.onText(/\/status/, async (msg) => {
         const decimals = await tokenContract.decimals();
 
         const formattedWeiRaised = ethers.utils.formatEther(weiRaised);
-        const formattedRate = rate.toString();
+        const formattedRate = ethers.utils.formatEther(rate);
         const message = `
 📊 *Status da Crowdsale:*
 
