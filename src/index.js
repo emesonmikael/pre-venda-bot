@@ -186,12 +186,15 @@ bot.onText(/\/status/, async (msg) => {
         const rate = await crowdsaleContract.rate();
         const symbol = await tokenContract.symbol();
         const decimals = await tokenContract.decimals();
+        const remaining = await crowdsaleContract.remainingTokens();
+        const formattedRemaining = ethers.utils.formatUnits(remaining, decimals);
 
         const formattedWeiRaised = ethers.utils.formatEther(weiRaised);
         const formattedRate = ethers.utils.formatEther(rate);
         const message = `
-📊 *Status da Crowdsale:*
+📊 *Status da Pre-Venda:*
 
+🏦 *Tokens restantes* ${formattedRemaining} ${symbol}
 💰 *BNB Arrecadados:* ${formattedWeiRaised} BNB
 🔢 *Taxa de Conversão:* ${formattedRate} tokens por BNB
 🔄 *Símbolo do Token:* ${symbol}
