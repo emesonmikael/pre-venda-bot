@@ -12,7 +12,7 @@ const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 const RPC_URL = process.env.RPC_URL; // WebSocket URL para BSC Mainnet
 const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS; // Endereço do contrato Crowdsale na BSC Mainnet
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // Inicializar o bot do Telegram
 const bot = new TelegramBot(TELEGRAM_BOT_TOKEN, { polling: true });
